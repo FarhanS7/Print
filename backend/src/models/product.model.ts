@@ -33,7 +33,9 @@ const designSchema = new mongoose.Schema({
     rotation: { type: Number }
   },
   title: { type: String },
-  price: { type: Number }
+  price: { type: Number },
+  tryOnEnabled: { type: Boolean, default: false },
+  composedGarmentUrl: { type: String }
 }, { timestamps: true });
 
 export const Design = mongoose.model('Design', designSchema);
