@@ -182,6 +182,35 @@ const Editor = () => {
                             <p className="text-white font-bold text-sm">Edit AI Prompt</p>
                         </div>
                     </div>
+
+                    <button 
+                        onClick={async () => {
+                            try {
+                                const designResp = await fetch("http://localhost:5000/api/designs", {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({
+                                        productId: selectedProduct.id,
+                                        artworkUrl: artworkUrl,
+                                        artworkPlacement: { /* get placement from EditorCanvas */ },
+                                        title: "Custom Creation",
+                                        price: 24.99,
+                                        tryOnEnabled: true // Enable Try-On
+                                    }),
+                                });
+                                const designData = await designResp.json();
+                                if (designData.success) {
+                                    navigate(`/try-on?designId=${designData.data.design._id}`);
+                                }
+                            } catch (error) {
+                                console.error("Failed to transition to try-on:", error);
+                            }
+                        }}
+                        className="w-full py-5 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-2xl font-black text-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all shadow-[0_0_30px_rgba(139,92,246,0.3)] active:scale-95"
+                    >
+                        <Sparkles className="w-5 h-5 fill-white" />
+                        Try It On Me!
+                    </button>
                 </div>
             </main>
         </div>

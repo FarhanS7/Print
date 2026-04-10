@@ -6,6 +6,8 @@ import Orders from "./pages/Orders";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
 
+import TryOn from "./pages/TryOn";
+
 function App() {
   return (
     <Router>
@@ -16,6 +18,7 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/success" element={<Success />} />
         <Route path="/cancel" element={<Cancel />} />
+        <Route path="/try-on" element={<TryOn />} />
         {/* Future routes (explore) will be added here */}
       </Routes>
     </Router>

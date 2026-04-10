@@ -35,6 +35,7 @@ export const Navbar = () => {
                     <Link to="/generate" className="text-zinc-400 hover:text-white transition-colors font-medium">Create</Link>
                     <Link to="/explore" className="text-zinc-400 hover:text-white transition-colors font-medium">Explore</Link>
                     <Link to="/orders" className="text-zinc-400 hover:text-white transition-colors font-medium">Orders</Link>
+                    <Link to="/try-on" className="text-violet-400 hover:text-violet-300 transition-colors font-bold px-3 py-1 bg-violet-500/10 rounded-full border border-violet-500/20">Try-On</Link>
                 </div>
 
                 <div className="flex items-center gap-4">
