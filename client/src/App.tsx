@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Generate from "./pages/Generate";
 import Editor from "./pages/Editor";
+import Orders from "./pages/Orders";
 
 function App() {
   return (
@@ -10,11 +11,13 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/generate" element={<Generate />} />
         <Route path="/editor" element={<Editor />} />
-        {/* Future routes (explore, orders) will be added here */}
+        <Route path="/orders" element={<Orders />} />
+        {/* Future routes (explore) will be added here */}
       </Routes>
     </Router>
   );
 }
+
 
 
 
