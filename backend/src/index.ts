@@ -5,6 +5,7 @@ import connectDB from './config/db';
 import { toNodeHandler } from "better-auth/node";
 import { auth } from "./lib/auth";
 import aiRoutes from "./routes/ai.routes";
+import productRoutes from "./routes/product.routes";
 
 dotenv.config();
 
@@ -26,6 +27,9 @@ app.all("/api/auth/*", toNodeHandler(auth));
 
 // AI Routes
 app.use("/api/ai", aiRoutes);
+
+// Product Routes
+app.use("/api/products", productRoutes);
 
 // Basic Route
 app.get('/', (req, res) => {
