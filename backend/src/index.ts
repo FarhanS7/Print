@@ -8,6 +8,7 @@ import aiRoutes from "./routes/ai.routes";
 import productRoutes from "./routes/product.routes";
 import designRoutes from "./routes/design.routes";
 import orderRoutes from "./routes/order.routes";
+import stripeWebhookHandler from "./webhooks/stripe.webhook";
 
 dotenv.config();
 
@@ -16,6 +17,9 @@ const PORT = process.env.PORT || 5000;
 
 // Connect to Database
 connectDB();
+
+// Stripe Webhook (MUST be before express.json() for raw body access)
+app.post("/api/webhooks/stripe", express.raw({ type: "application/json" }), stripeWebhookHandler);
 
 // Middlewares
 app.use(cors({
