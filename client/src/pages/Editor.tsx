@@ -132,9 +132,44 @@ const Editor = () => {
                             </div>
                         </div>
 
-                        <button className="w-full py-5 bg-white text-black rounded-2xl font-black text-lg flex items-center justify-center gap-2 hover:bg-zinc-200 transition-all shadow-[0_0_40px_rgba(255,255,255,0.15)] active:scale-95">
+                        <button 
+                            onClick={async () => {
+                                // First, ensure the design is saved, or get the designId
+                                // For this flow, we'll assume the user might want to checkout directly
+                                // We'll trigger the save then the checkout
+                                try {
+                                    const designResp = await fetch("http://localhost:5000/api/designs", {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({
+                                            productId: selectedProduct.id,
+                                            artworkUrl: artworkUrl,
+                                            artworkPlacement: { /* get placement from EditorCanvas */ },
+                                            title: "Custom Creation",
+                                            price: 24.99
+                                        }),
+                                    });
+                                    const designData = await designResp.json();
+                                    
+                                    if (designData.success) {
+                                        const checkoutResp = await fetch("http://localhost:5000/api/orders/checkout", {
+                                            method: "POST",
+                                            headers: { "Content-Type": "application/json" },
+                                            body: JSON.stringify({ designId: designData.data.design._id }),
+                                        });
+                                        const checkoutData = await checkoutResp.json();
+                                        if (checkoutData.success && checkoutData.data.url) {
+                                            window.location.href = checkoutData.data.url;
+                                        }
+                                    }
+                                } catch (error) {
+                                    console.error("Checkout Error:", error);
+                                }
+                            }}
+                            className="w-full py-5 bg-white text-black rounded-2xl font-black text-lg flex items-center justify-center gap-2 hover:bg-zinc-200 transition-all shadow-[0_0_40px_rgba(255,255,255,0.15)] active:scale-95"
+                        >
                             <ShoppingCart className="w-5 h-5" />
-                            Add to Bag
+                            Buy Now
                         </button>
                     </div>
 

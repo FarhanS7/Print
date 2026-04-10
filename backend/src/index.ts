@@ -7,6 +7,7 @@ import { auth } from "./lib/auth";
 import aiRoutes from "./routes/ai.routes";
 import productRoutes from "./routes/product.routes";
 import designRoutes from "./routes/design.routes";
+import orderRoutes from "./routes/order.routes";
 
 dotenv.config();
 
@@ -34,6 +35,9 @@ app.use("/api/products", productRoutes);
 
 // Design Routes
 app.use("/api/designs", designRoutes);
+
+// Order Routes
+app.use("/api/orders", orderRoutes);
 
 // Basic Route
 app.get('/', (req, res) => {
