@@ -6,6 +6,7 @@ import { toNodeHandler } from "better-auth/node";
 import { auth } from "./lib/auth";
 import aiRoutes from "./routes/ai.routes";
 import productRoutes from "./routes/product.routes";
+import designRoutes from "./routes/design.routes";
 
 dotenv.config();
 
@@ -30,6 +31,9 @@ app.use("/api/ai", aiRoutes);
 
 // Product Routes
 app.use("/api/products", productRoutes);
+
+// Design Routes
+app.use("/api/designs", designRoutes);
 
 // Basic Route
 app.get('/', (req, res) => {

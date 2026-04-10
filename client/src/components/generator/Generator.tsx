@@ -1,8 +1,10 @@
-import { useState } from "react";
 import { Wand2, Loader2, Sparkles, Image as ImageIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export const Generator = () => {
+    const navigate = useNavigate();
     const [prompt, setPrompt] = useState("");
+
     const [generating, setGenerating] = useState(false);
     const [artworkUrl, setArtworkUrl] = useState<string | null>(null);
 
@@ -112,10 +114,16 @@ export const Generator = () => {
 
                     {artworkUrl && !generating && (
                         <div className="mt-6 flex flex-col sm:flex-row gap-4 animate-slide-up">
-                            <button className="flex-1 py-4 bg-white text-black rounded-2xl font-black hover:bg-zinc-200 transition-all transition-transform active:scale-95 shadow-xl">
+                            <button 
+                                onClick={() => navigate(`/editor?artwork=${encodeURIComponent(artworkUrl)}`)}
+                                className="flex-1 py-4 bg-white text-black rounded-2xl font-black hover:bg-zinc-200 transition-all transition-transform active:scale-95 shadow-xl"
+                            >
                                 Select & Design
                             </button>
-                            <button className="flex-1 py-4 bg-white/5 text-white border border-white/10 rounded-2xl font-bold hover:bg-white/10 transition-all">
+                            <button 
+                                onClick={() => { setArtworkUrl(null); setPrompt(""); }}
+                                className="flex-1 py-4 bg-white/5 text-white border border-white/10 rounded-2xl font-bold hover:bg-white/10 transition-all"
+                            >
                                 Try Again
                             </button>
                         </div>
