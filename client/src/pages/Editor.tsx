@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Navbar } from "../components/layout/Navbar";
 import { EditorCanvas } from "../components/editor/EditorCanvas";
-import { Smartphone, Shirt, ShoppingCart, Sparkles, Wand2 } from "lucide-react";
+import { ShoppingCart, Sparkles, Wand2 } from "lucide-react";
 
 const PRODUCTS = [
     { id: "tee-1", name: "Premium Tee", category: "T-Shirt", image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=60" },

@@ -35,7 +35,7 @@ export const EditorCanvas = ({ artworkUrl, productMockupUrl, onSave }: EditorCan
             // Scale and center the mockup
             img.scaleToWidth(canvas.width!);
             canvas.add(img);
-            canvas.sendToBack(img);
+            canvas.moveObjectTo(img, 0);
         });
 
         // Load Artwork

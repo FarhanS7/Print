@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
-import { createCheckoutSession } from '../services/stripe.service';
-import { Design } from '../models/product.model';
-import { Order } from '../models/order.model';
-import { BadRequestException, NotFoundException } from '../utils/app-error';
+import type { Request, Response } from 'express';
+import { createCheckoutSession } from '../services/stripe.service.js';
+import { Design } from '../models/product.model.js';
+import { Order } from '../models/order.model.js';
+import { BadRequestException, NotFoundException } from '../utils/app-error.js';
 
 export const checkoutController = async (req: Request, res: Response) => {
     try {
@@ -48,7 +48,7 @@ export const checkoutController = async (req: Request, res: Response) => {
 
 export const getUserOrdersController = async (req: Request, res: Response) => {
     try {
-        const userId = req.query.userId || "000000000000000000000000"; // Placeholder
+        const userId = (req.query.userId as string) || "000000000000000000000000"; // Placeholder
         const orders = await Order.find({ userId })
             .populate('designId')
             .populate('productId')

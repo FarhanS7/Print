@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
-import { Design } from '../models/product.model';
-import { BadRequestException } from '../utils/app-error';
+import type { Request, Response } from 'express';
+import { Design } from '../models/product.model.js';
+import { BadRequestException } from '../utils/app-error.js';
 
 export const createDesignController = async (req: Request, res: Response) => {
     try {
@@ -38,7 +38,7 @@ export const createDesignController = async (req: Request, res: Response) => {
 
 export const getUserDesignsController = async (req: Request, res: Response) => {
     try {
-        const userId = req.query.userId || "000000000000000000000000"; // Placeholder
+        const userId = (req.query.userId as string) || "000000000000000000000000"; // Placeholder
         const designs = await Design.find({ userId }).populate('productId').lean();
 
         res.status(200).json({

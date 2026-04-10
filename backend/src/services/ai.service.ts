@@ -1,6 +1,6 @@
 import axios from 'axios';
-import cloudinary from '../config/cloudinary.config';
-import { InternalServerException } from '../utils/app-error';
+import cloudinary from '../config/cloudinary.config.js';
+import { InternalServerException } from '../utils/app-error.js';
 
 /**
  * Generates an image using Pollinations.ai (Free/No-Key)

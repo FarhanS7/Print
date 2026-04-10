@@ -1,12 +1,10 @@
 import Stripe from 'stripe';
 import dotenv from 'dotenv';
-import { InternalServerException } from '../utils/app-error';
+import { InternalServerException } from '../utils/app-error.js';
 
 dotenv.config();
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: '2025-02-24-preview',
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
 
 /**
  * Creates a Stripe Checkout Session for a design.

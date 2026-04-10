@@ -1,10 +1,12 @@
 import { betterAuth } from "better-auth";
-import { mongooseAdapter } from "better-auth/adapters/mongoose";
+import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import mongoose from "mongoose";
-import { User, Session, Account, Verification } from "../models/user.model";
+import { User, Session, Account, Verification } from "../models/user.model.js";
 
 export const auth = betterAuth({
-    database: mongooseAdapter(mongoose),
+    database: mongodbAdapter(mongoose.connection.db!, {
+        client: mongoose.connection.getClient() as any
+    }),
     emailAndPassword: {
         enabled: true
     },

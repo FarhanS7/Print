@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
-import { generateArtwork } from '../services/ai.service';
-import { BadRequestException } from '../utils/app-error';
+import type { Request, Response } from 'express';
+import { generateArtwork } from '../services/ai.service.js';
+import { BadRequestException } from '../utils/app-error.js';
 
 export const generateAIArtworkController = async (req: Request, res: Response) => {
     try {

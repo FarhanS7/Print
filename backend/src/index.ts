@@ -1,14 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import connectDB from './config/db';
+import connectDB from './config/db.js';
 import { toNodeHandler } from "better-auth/node";
-import { auth } from "./lib/auth";
-import aiRoutes from "./routes/ai.routes";
-import productRoutes from "./routes/product.routes";
-import designRoutes from "./routes/design.routes";
-import orderRoutes from "./routes/order.routes";
-import stripeWebhookHandler from "./webhooks/stripe.webhook";
+import { auth } from "./lib/auth.js";
+import aiRoutes from "./routes/ai.routes.js";
+import productRoutes from "./routes/product.routes.js";
+import designRoutes from "./routes/design.routes.js";
+import orderRoutes from "./routes/order.routes.js";
+import stripeWebhookHandler from "./webhooks/stripe.webhook.js";
 
 dotenv.config();
 

@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
-import stripe from '../services/stripe.service';
-import { Order } from '../models/order.model';
+import type { Request, Response } from 'express';
+import stripe from '../services/stripe.service.js';
+import { Order } from '../models/order.model.js';
 import dotenv from 'dotenv';
 
 dotenv.config();

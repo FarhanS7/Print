@@ -1,4 +1,4 @@
-import cloudinary from "../config/cloudinary.config";
+import cloudinary from "../config/cloudinary.config.js";
 
 interface MockupOptions {
   mockupPublicId: string;
@@ -41,9 +41,10 @@ export const getMockupUrl = (options: MockupOptions) => {
  */
 export const getPublicIdFromUrl = (url: string): string => {
   const parts = url.split("/upload/");
-  if (parts.length < 2) return "";
+  const partOne = parts[1];
+  if (!partOne) return "";
   
-  return parts[1]
+  return partOne
     .replace(/^v\d+\//, "") // remove version prefix e.g. v1773951553/
     .replace(/\.[^.]+$/, ""); // remove extension
 };

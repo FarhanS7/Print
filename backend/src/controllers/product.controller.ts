@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
-import { Product } from '../models/product.model';
-import { NotFoundException } from '../utils/app-error';
+import type { Request, Response } from 'express';
+import { Product } from '../models/product.model.js';
+import { NotFoundException } from '../utils/app-error.js';
 
 export const getProductsController = async (req: Request, res: Response) => {
     try {

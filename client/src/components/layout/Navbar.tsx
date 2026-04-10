@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Sparkles, ShoppingBag, Menu, X, User } from "lucide-react";
+import { Sparkles, ShoppingBag, Menu, User } from "lucide-react";
 
 export const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);

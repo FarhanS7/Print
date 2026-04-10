@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Wand2, Loader2, Sparkles, Image as ImageIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
