@@ -3,3 +3,10 @@ node_modules/
 dist/
 .DS_Store
 *.log
+
+# Agents
+.agents/
+.claude/
+skills-lock.json
+# Agent generated/related markdown files
+*.md

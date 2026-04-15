@@ -15,19 +15,22 @@ export class QueueHealthService {
   }> {
     const jobCounts = await tryOnQueue.getJobCounts('waiting', 'active', 'delayed');
     
-    const isOverloaded = jobCounts.waiting > WAITING_THRESHOLD || jobCounts.active > ACTIVE_THRESHOLD;
+    const waitingCount = jobCounts.waiting || 0;
+    const activeCount = jobCounts.active || 0;
+
+    const isOverloaded = waitingCount > WAITING_THRESHOLD || activeCount > ACTIVE_THRESHOLD;
     
     let reason = undefined;
-    if (jobCounts.waiting > WAITING_THRESHOLD) {
+    if (waitingCount > WAITING_THRESHOLD) {
       reason = 'System is experiencing high demand. Generation queue is full.';
-    } else if (jobCounts.active > ACTIVE_THRESHOLD) {
+    } else if (activeCount > ACTIVE_THRESHOLD) {
       reason = 'System is at maximum processing capacity.';
     }
 
     return {
       overloaded: isOverloaded,
-      waitingCount: jobCounts.waiting,
-      activeCount: jobCounts.active,
+      waitingCount,
+      activeCount,
       reason
     };
   }

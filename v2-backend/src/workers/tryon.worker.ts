@@ -3,7 +3,7 @@ import { redisConnection } from '../config/redis.config.js';
 import connectDB from '../config/db.config.js';
 import { TryOnSession } from '../models/tryOnSession.model.js';
 import { TryOnAsset } from '../models/tryOnAsset.model.js';
-import { TryOnJobData } from '../queues/tryon.queue.js';
+import { type TryOnJobData } from '../queues/tryon.queue.js';
 import { FalTryOnProvider } from '../providers/tryon/falTryon.provider.js';
 import { GarmentComposerService } from '../services/garmentComposer.service.js';
 import { PhotoPolicyService } from '../services/photoPolicy.service.js';
