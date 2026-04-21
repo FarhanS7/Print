@@ -60,7 +60,20 @@
 
 /* ─── Glassmorphism ────────────────────────────────────────────────────────── */
 .glass-morphism {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl;
+    @apply bg-white/[0.03] backdrop-blur-3xl border border-white/5 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
+}
+
+.glass-morphism-dark {
+    @apply bg-black/40 backdrop-blur-3xl border border-white/[0.08] shadow-2xl;
+}
+
+/* ─── Atmospheric Glows ────────────────────────────────────────────────────── */
+.glow-aura-violet {
+    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+}
+
+.glow-aura-fuchsia {
+    background: radial-gradient(circle at center, rgba(232, 121, 249, 0.1) 0%, transparent 70%);
 }
 
 /* ─── Gradient text ────────────────────────────────────────────────────────── */

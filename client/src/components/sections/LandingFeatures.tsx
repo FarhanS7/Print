@@ -29,12 +29,12 @@ const FEATURES = [
     visual: (
       <div className="mt-5 rounded-xl border border-zinc-200 bg-zinc-50 overflow-hidden">
         {/* Prompt bar */}
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-zinc-100 bg-white">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-zinc-100 bg-white/40 backdrop-blur-sm">
           <Wand2 className="w-3.5 h-3.5 text-violet-500 shrink-0" />
           <span className="text-[11px] text-zinc-500 font-mono truncate">
-            "cosmic tiger, neon jungle, vector illustration"
+            "cosmic tiger, neon jungle, vector"
           </span>
-          <span className="ml-auto shrink-0 px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-violet-600 bg-violet-50 rounded-full border border-violet-100">
+          <span className="ml-auto shrink-0 px-2.5 py-1 text-[9px] font-black uppercase tracking-widest text-violet-600 bg-violet-100 rounded-full">
             Generating…
           </span>
         </div>
@@ -90,14 +90,14 @@ const FEATURES = [
     visual: (
       <div className="mt-5 rounded-xl border border-zinc-200 bg-zinc-50 overflow-hidden">
         {/* Chrome */}
-        <div className="flex gap-1.5 px-3 py-2.5 border-b border-zinc-100 bg-white">
-          {["bg-red-400/60", "bg-yellow-400/60", "bg-green-400/60"].map(
+        <div className="flex gap-1.5 px-4 py-3 border-b border-zinc-100 bg-white/40 backdrop-blur-sm">
+          {["bg-red-400", "bg-yellow-400", "bg-green-400"].map(
             (c, i) => (
-              <span key={i} className={`w-2.5 h-2.5 rounded-full ${c}`} />
+              <span key={i} className={`w-2 h-2 rounded-full ${c}`} />
             ),
           )}
-          <span className="ml-2 text-[10px] text-zinc-400 font-mono">
-            canvas — Premium Tee
+          <span className="ml-2 text-[10px] text-zinc-400 font-bold uppercase tracking-widest">
+            Design Studio
           </span>
         </div>
         {/* Canvas */}
@@ -120,7 +120,7 @@ const FEATURES = [
               loading="lazy"
             />
             {/* Selection box */}
-            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-10 h-10 border-2 border-fuchsia-500 rounded-md overflow-hidden">
+            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-10 h-10 border-2 border-fuchsia-500 rounded-lg overflow-hidden shadow-lg">
               <img
                 src="https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=80&q=80"
                 alt=""
@@ -128,14 +128,14 @@ const FEATURES = [
                 loading="lazy"
               />
               {[
-                "-top-1.5 -left-1.5",
-                "-top-1.5 -right-1.5",
-                "-bottom-1.5 -left-1.5",
-                "-bottom-1.5 -right-1.5",
+                "-top-2 -left-2",
+                "-top-2 -right-2",
+                "-bottom-2 -left-2",
+                "-bottom-2 -right-2",
               ].map((pos, i) => (
                 <span
                   key={i}
-                  className={`absolute ${pos} w-3 h-3 bg-fuchsia-500 rounded-sm border border-white`}
+                  className={`absolute ${pos} w-4 h-4 bg-fuchsia-500 rounded-full border-2 border-white shadow-sm`}
                 />
               ))}
             </div>
@@ -314,65 +314,81 @@ const FeatureCard = ({
   cta,
   colSpan,
   visual,
-}: (typeof FEATURES)[0]) => (
-  <div
-    className={`
-      group flex flex-col
-      rounded-2xl border border-zinc-200
-      bg-white p-6
-      hover:border-zinc-300 hover:shadow-md
-      transition-all duration-300
-      ${colSpan}
-    `}
-  >
-    {/* Icon */}
+}: (typeof FEATURES)[0]) => {
+  // Extract shadow color from iconColor class (e.g., text-violet-600 -> shadow-violet-500/10)
+  const shadowColor = iconColor.replace("text-", "shadow-").replace("600", "500/10");
+  
+  return (
     <div
-      className={`w-10 h-10 rounded-xl border flex items-center justify-center mb-4 ${iconBg}`}
-    >
-      <Icon className={`w-5 h-5 ${iconColor}`} />
-    </div>
-
-    {/* Tag */}
-    <span className="inline-block mb-2 text-[10px] font-bold uppercase tracking-[0.15em] text-zinc-400">
-      {tag}
-    </span>
-
-    {/* Title */}
-    <h3 className="text-lg font-black text-zinc-950 leading-snug mb-2">
-      {title}
-    </h3>
-
-    {/* Description */}
-    <p className="text-sm text-zinc-500 leading-relaxed mb-4">{description}</p>
-
-    {/* Bullets */}
-    <ul className="space-y-2 mb-5">
-      {bullets.map((b) => (
-        <li key={b} className="flex items-start gap-2 text-sm text-zinc-500">
-          <Check className={`w-3.5 h-3.5 mt-[3px] shrink-0 ${accentColor}`} />
-          <span>{b}</span>
-        </li>
-      ))}
-    </ul>
-
-    {/* CTA */}
-    <Link
-      to={cta.to}
       className={`
-        group/link mt-auto inline-flex items-center gap-1.5
-        text-sm font-semibold ${accentColor}
-        hover:underline underline-offset-4
-        transition-colors duration-150
+        group relative flex flex-col overflow-hidden
+        rounded-[2.5rem] border border-zinc-200/50
+        bg-white/60 backdrop-blur-xl p-8
+        hover:border-zinc-300 hover:shadow-2xl hover:shadow-${shadowColor}
+        transition-all duration-500
+        ${colSpan}
       `}
     >
-      {cta.label}
-      <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform duration-150" />
-    </Link>
+      {/* Background flare */}
+      <div className={`absolute -top-12 -right-12 w-32 h-32 blur-[80px] opacity-20 transition-opacity duration-500 group-hover:opacity-40 ${iconBg}`} />
 
-    {/* Visual */}
-    {visual}
-  </div>
-);
+      {/* Icon Area */}
+      <div className="flex items-center justify-between mb-6">
+        <div
+          className={`w-12 h-12 rounded-2xl border flex items-center justify-center ${iconBg} shadow-sm backdrop-blur-sm`}
+        >
+          <Icon className={`w-6 h-6 ${iconColor}`} />
+        </div>
+        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 select-none">
+          {tag}
+        </span>
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10">
+        <h3 className="text-2xl font-black text-zinc-950 leading-tight mb-3">
+          {title}
+        </h3>
+        <p className="text-base text-zinc-500 leading-relaxed mb-6">{description}</p>
+      </div>
+
+      {/* Bullets */}
+      <ul className="space-y-3 mb-8 relative z-10">
+        {bullets.map((b) => (
+          <li key={b} className="flex items-start gap-2.5 text-sm font-medium text-zinc-600">
+            <div className={`mt-1 flex items-center justify-center w-4 h-4 rounded-full border border-current opacity-20 ${accentColor}`}>
+               <Check className="w-2.5 h-2.5" />
+            </div>
+            <span>{b}</span>
+          </li>
+        ))}
+      </ul>
+
+      {/* CTA */}
+      <div className="mt-auto pt-6 border-t border-zinc-100/50 flex items-center justify-between relative z-10">
+        <Link
+          to={cta.to}
+          className={`
+            group/link inline-flex items-center gap-2
+            text-sm font-bold ${accentColor}
+            transition-all duration-300
+          `}
+        >
+          <span className="relative">
+            {cta.label}
+            <span className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-current transition-all duration-300 group-hover/link:w-full`} />
+          </span>
+          <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+        </Link>
+      </div>
+
+      {/* Visual Workspace */}
+      <div className="mt-8 transform transition-transform duration-500 group-hover:scale-[1.02]">
+        {visual}
+      </div>
+    </div>
+  );
+};
 
 /* ─── Section ────────────────────────────────────────────────────────────── */
 const LandingFeatures = () => (

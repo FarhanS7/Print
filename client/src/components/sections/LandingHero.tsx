@@ -32,7 +32,7 @@ const Connector = () => (
 
 /* ─── Card 1 · AI Generation ────────────────────────────────────────────── */
 const GenerateCard = () => (
-  <div className="bg-white border border-zinc-200 rounded-2xl p-4 shadow-sm">
+  <div className="bg-white border border-violet-100 rounded-2xl p-4 shadow-xl">
     {/* Header */}
     <div className="flex items-center gap-2 mb-3">
       <div className="w-6 h-6 rounded-lg bg-violet-50 border border-violet-100 flex items-center justify-center shrink-0">
@@ -86,7 +86,7 @@ const GenerateCard = () => (
 
 /* ─── Card 2 · Design Editor ─────────────────────────────────────────────── */
 const DesignCard = () => (
-  <div className="bg-white border border-zinc-200 rounded-2xl p-4 shadow-sm ml-5">
+  <div className="bg-white border border-fuchsia-100 rounded-2xl p-4 shadow-xl">
     {/* Header */}
     <div className="flex items-center gap-2 mb-3">
       <div className="w-6 h-6 rounded-lg bg-fuchsia-50 border border-fuchsia-100 flex items-center justify-center shrink-0">
@@ -156,14 +156,14 @@ const DesignCard = () => (
     {/* Toolbar row */}
     <div className="mt-2.5 flex items-center justify-between text-[10px]">
       <span className="text-zinc-400">Scale 1.2× · Rotate 0°</span>
-      <span className="font-black text-zinc-900">$24.99</span>
+      <span className="font-black text-violet-600">$24.99</span>
     </div>
   </div>
 );
 
 /* ─── Card 3 · Try-On ────────────────────────────────────────────────────── */
 const TryOnCard = () => (
-  <div className="bg-white border border-zinc-200 rounded-2xl p-4 shadow-sm">
+  <div className="bg-white border border-emerald-100 rounded-2xl p-4 shadow-xl">
     {/* Header */}
     <div className="flex items-center gap-2 mb-3">
       <div className="w-6 h-6 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
@@ -211,17 +211,42 @@ const TryOnCard = () => (
   </div>
 );
 
-/* ─── Right column — stacked workflow ───────────────────────────────────── */
+/* ─── Right column — dynamic clustered workflow ─────────────────────────── */
 const WorkflowStack = () => (
-  <div className="relative w-full max-w-[340px] mx-auto lg:mx-0 lg:scale-[0.85] xl:scale-95 transition-transform origin-top lg:-mt-10">
-    {/* Very subtle background pill */}
-    <div className="absolute -inset-4 bg-zinc-50 rounded-3xl -z-10" />
+  <div className="relative w-full max-w-[420px] h-[480px] mx-auto lg:mx-0 lg:scale-90 xl:scale-100 transition-transform">
+    {/* Background glow */}
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-violet-500/10 blur-[100px] -z-10 rounded-full" />
 
-    <GenerateCard />
-    <Connector />
-    <DesignCard />
-    <Connector />
-    <TryOnCard />
+    {/* Card 1: Generate */}
+    <div className="absolute top-0 left-0 w-[240px] z-20 animate-float">
+      <GenerateCard />
+    </div>
+
+    {/* Card 2: Design */}
+    <div className="absolute top-32 right-0 w-[240px] z-30 animate-float" style={{ animationDelay: "-1.5s" }}>
+      <DesignCard />
+    </div>
+
+    {/* Card 3: Try-On */}
+    <div className="absolute bottom-0 left-8 w-[240px] z-40 animate-float" style={{ animationDelay: "-3s" }}>
+      <TryOnCard />
+    </div>
+
+    {/* Connecting lines (visual only) */}
+    <svg className="absolute inset-0 w-full h-full -z-10" viewBox="0 0 400 500" fill="none">
+       <path d="M120 150 Q 300 200 300 300" stroke="url(#line-grad-1)" strokeWidth="2" strokeDasharray="6 6" />
+       <path d="M300 350 Q 150 400 150 450" stroke="url(#line-grad-2)" strokeWidth="2" strokeDasharray="6 6" />
+       <defs>
+         <linearGradient id="line-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+           <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.2" />
+           <stop offset="100%" stopColor="#ec4899" stopOpacity="0.5" />
+         </linearGradient>
+         <linearGradient id="line-grad-2" x1="0%" y1="0%" x2="100%" y2="100%">
+           <stop offset="0%" stopColor="#ec4899" stopOpacity="0.5" />
+           <stop offset="100%" stopColor="#10b981" stopOpacity="0.2" />
+         </linearGradient>
+       </defs>
+    </svg>
   </div>
 );
 
@@ -232,7 +257,7 @@ const LandingHero = () => (
     <div className="border-t border-zinc-100" />
 
     {/* Main content */}
-    <div className="max-w-7xl mx-auto px-5 sm:px-8 py-8 lg:py-16">
+    <div className="max-w-7xl mx-auto px-5 sm:px-8 pt-32 pb-16 lg:pt-48 lg:pb-32">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-14 lg:gap-10 items-start">
         {/* ── Left: editorial copy ──────────────────────────────────── */}
         <div className="space-y-6 lg:space-y-8">

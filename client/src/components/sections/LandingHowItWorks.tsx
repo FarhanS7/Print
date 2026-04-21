@@ -259,59 +259,54 @@ const StepCard = ({
   visual,
   isLast,
 }: StepCardProps) => (
-  <div className="relative flex flex-col h-full">
+  <div className="relative flex flex-col h-full group">
     {/* Horizontal connector — desktop only, hidden on last */}
     {!isLast && (
-      <div className="hidden lg:flex absolute top-9 left-full z-10 w-6 -translate-x-3 items-center justify-center">
-        <ArrowRight className="w-4 h-4 text-zinc-300" />
-      </div>
-    )}
-
-    {/* Mobile connector */}
-    {!isLast && (
-      <div className="lg:hidden flex justify-center py-3">
-        <ArrowDown className="w-4 h-4 text-zinc-300" />
+      <div className="hidden lg:flex absolute top-12 left-[calc(100%-1rem)] z-10 w-8 items-center justify-center">
+        <ArrowRight className="w-5 h-5 text-zinc-300 animate-pulse" />
       </div>
     )}
 
     {/* Card */}
     <div
       className={`
-        group flex flex-col flex-1 h-full
-        rounded-2xl border border-zinc-200 border-t-2 ${borderAccent}
-        bg-white p-6
-        hover:border-zinc-300 hover:shadow-md
-        transition-all duration-300
+        relative flex flex-col flex-1 h-full
+        rounded-[2.5rem] border border-zinc-200/50 border-t-4 ${borderAccent}
+        bg-white/60 backdrop-blur-xl p-8
+        hover:border-zinc-300 hover:shadow-2xl hover:shadow-zinc-200/50
+        transition-all duration-500
       `}
     >
-      {/* Top row */}
-      <div className="flex items-start justify-between mb-5">
-        <div
-          className={`w-10 h-10 rounded-xl border flex items-center justify-center shrink-0 ${iconBg}`}
-        >
-          <Icon className={`w-5 h-5 ${iconColor}`} />
-        </div>
-        <span
-          className={`text-5xl font-black leading-none select-none ${numberColor}`}
-        >
+      {/* Step counter */}
+      <div className="absolute top-6 right-8 select-none">
+        <span className={`text-6xl font-black opacity-10 ${numberColor}`}>
           {number}
         </span>
       </div>
 
+      {/* Top row */}
+      <div className="flex items-start mb-6">
+        <div
+          className={`w-12 h-12 rounded-2xl border flex items-center justify-center shrink-0 ${iconBg} shadow-sm`}
+        >
+          <Icon className={`w-6 h-6 ${iconColor}`} />
+        </div>
+      </div>
+
       {/* Tag */}
       <span
-        className={`inline-block mb-2 text-[10px] font-bold uppercase tracking-[0.18em] ${accentColor}`}
+        className={`inline-block mb-3 text-[11px] font-black uppercase tracking-[0.2em] ${accentColor}`}
       >
         {tag}
       </span>
 
       {/* Title */}
-      <h3 className="text-xl font-black text-zinc-950 leading-snug mb-3">
+      <h3 className="text-2xl font-black text-zinc-950 leading-tight mb-3">
         {title}
       </h3>
 
       {/* Description */}
-      <p className="text-sm text-zinc-500 leading-relaxed mb-5">
+      <p className="text-base text-zinc-500 leading-relaxed mb-6">
         {description}
       </p>
 
@@ -319,17 +314,22 @@ const StepCard = ({
       <Link
         to={cta.to}
         className={`
-          group/link mt-auto inline-flex items-center gap-1.5
-          text-sm font-semibold ${accentColor}
-          hover:underline underline-offset-4 transition-colors duration-150
+          group/link mt-auto inline-flex items-center gap-2
+          text-sm font-bold ${accentColor}
+          transition-all duration-300
         `}
       >
-        {cta.label}
-        <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform duration-150" />
+        <span className="relative">
+          {cta.label}
+          <span className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-current transition-all duration-300 group-hover/link:w-full`} />
+        </span>
+        <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
       </Link>
 
-      {/* Visual */}
-      <div className="mt-6">{visual}</div>
+      {/* Visual Workspace */}
+      <div className="mt-8 transform transition-transform duration-500 group-hover:scale-[1.03]">
+        {visual}
+      </div>
     </div>
   </div>
 );

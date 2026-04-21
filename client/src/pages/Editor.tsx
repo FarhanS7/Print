@@ -60,14 +60,27 @@ const Editor = () => {
     }
 
     return (
-        <div className="min-h-screen bg-zinc-950">
+        <div className="min-h-screen bg-zinc-950 relative overflow-hidden">
+            {/* Atmospheric Background Flares */}
+            <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-violet-600/5 to-transparent pointer-events-none" />
+            <div className="absolute top-[20%] -right-48 w-96 h-96 glow-aura-fuchsia opacity-20 pointer-events-none" />
+
             <Navbar />
-            <main className="pt-24 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 py-12">
+            
+            <main className="relative z-10 pt-28 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 py-12">
                 {/* Left: Product Selection Sidebar (3 Cols) */}
-                <div className="lg:col-span-3 space-y-8">
-                    <div className="space-y-2">
-                        <h2 className="text-3xl font-black text-white">Select <span className="text-violet-400">Product</span></h2>
-                        <p className="text-zinc-500 text-sm">Choose the base for your artwork.</p>
+                <div className="lg:col-span-3 space-y-10 animate-slide-up">
+                    <div className="space-y-4">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-400 text-[10px] font-black uppercase tracking-widest">
+                            Configuration
+                        </div>
+                        <h2 className="text-4xl font-black text-white leading-tight">
+                            Select <br/>
+                            <span className="text-violet-400">Product</span>
+                        </h2>
+                        <p className="text-sm text-zinc-500 leading-relaxed max-w-[200px]">
+                            Choose the perfect canvas for your AI masterpiece.
+                        </p>
                     </div>
 
                     <div className="space-y-4">
@@ -75,68 +88,78 @@ const Editor = () => {
                             <button
                                 key={product.id}
                                 onClick={() => setSelectedProduct(product)}
-                                className={`w-full p-4 rounded-2xl border transition-all text-left flex items-center gap-4 group ${
+                                className={`w-full p-5 rounded-[2rem] border transition-all duration-300 text-left flex items-center gap-5 group relative overflow-hidden ${
                                     selectedProduct.id === product.id 
-                                        ? "bg-violet-600/10 border-violet-500" 
-                                        : "bg-white/5 border-white/10 hover:border-white/20"
+                                        ? "bg-violet-600/10 border-violet-500/50 shadow-[0_0_30px_rgba(139,92,246,0.1)]" 
+                                        : "bg-white/[0.03] border-white/5 hover:border-white/20 hover:bg-white/[0.05]"
                                 }`}
                             >
-                                <div className="w-16 h-16 bg-zinc-900 rounded-xl overflow-hidden group-hover:scale-110 transition-transform">
+                                <div className="w-16 h-16 bg-zinc-900 rounded-2xl overflow-hidden shadow-inner group-hover:scale-105 transition-transform duration-500">
                                     <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                                 </div>
-                                <div>
-                                    <h4 className="text-white font-bold">{product.name}</h4>
-                                    <p className="text-zinc-500 text-xs font-bold uppercase">{product.category}</p>
+                                <div className="relative z-10">
+                                    <h4 className="text-white font-black text-lg">{product.name}</h4>
+                                    <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest mt-0.5">{product.category}</p>
                                 </div>
+                                {selectedProduct.id === product.id && (
+                                    <div className="absolute top-1/2 -right-4 -translate-y-1/2 w-8 h-8 bg-violet-500/20 blur-xl rounded-full" />
+                                )}
                             </button>
                         ))}
                     </div>
 
-                   <div className="p-4 bg-fuchsia-600/10 border border-fuchsia-500/20 rounded-2xl flex items-start gap-3">
-                        <Sparkles className="w-5 h-5 text-fuchsia-400 shrink-0" />
-                        <p className="text-xs text-fuchsia-300/80 leading-snug">
-                            Your high-res AI artwork will be precisely scaled for professional results.
+                    <div className="p-6 bg-fuchsia-600/5 border border-fuchsia-500/10 rounded-[2rem] flex items-start gap-4 hover:bg-fuchsia-600/10 transition-colors">
+                        <Sparkles className="w-6 h-6 text-fuchsia-400 shrink-0" />
+                        <p className="text-xs text-fuchsia-300/60 leading-relaxed font-medium">
+                            Your high-res AI artwork will be auto-scaled for professional production quality.
                         </p>
                     </div>
                 </div>
 
                 {/* Center: Canvas Editor (6 Cols) */}
-                <div className="lg:col-span-6">
-                    <EditorCanvas 
-                        artworkUrl={artworkUrl} 
-                        productMockupUrl={selectedProduct.image} 
-                        onSave={handleSavePlacement}
-                    />
+                <div className="lg:col-span-6 flex flex-col items-center animate-fade-in" style={{ animationDelay: '0.15s' }}>
+                    <div className="w-full relative">
+                        {/* Decorative glow behind canvas */}
+                        <div className="absolute inset-0 bg-violet-600/5 blur-[100px] rounded-full pointer-events-none" />
+                        <EditorCanvas 
+                            artworkUrl={artworkUrl} 
+                            productMockupUrl={selectedProduct.image} 
+                            onSave={handleSavePlacement}
+                        />
+                    </div>
                 </div>
 
                 {/* Right: Actions sidebar (3 Cols) */}
-                <div className="lg:col-span-3 space-y-8">
-                    <div className="glass-morphism rounded-3xl p-6 space-y-6">
+                <div className="lg:col-span-3 space-y-8 animate-slide-up" style={{ animationDelay: '0.3s' }}>
+                    <div className="glass-morphism-dark rounded-[2.5rem] p-8 space-y-8 shadow-2xl relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                        
                         <div className="space-y-1">
-                            <span className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.2em]">Current Design</span>
-                            <h3 className="text-white font-black text-xl">Untitled Creation</h3>
+                            <span className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.25em]">Summary</span>
+                            <h3 className="text-white font-black text-2xl">Custom Creation</h3>
+                            <p className="text-[10px] text-violet-400 font-bold uppercase tracking-widest mt-1 italic">Exclusive Design</p>
                         </div>
 
-                        <div className="space-y-4 pt-4 border-t border-white/5">
+                        <div className="space-y-5 pt-8 border-t border-white/5">
                             <div className="flex justify-between items-center text-sm">
-                                <span className="text-zinc-500 font-bold uppercase tracking-wider">Base Price</span>
+                                <span className="text-zinc-500 font-bold uppercase tracking-[0.15em]">Base Price</span>
                                 <span className="text-white font-black">$24.99</span>
                             </div>
-                             <div className="flex justify-between items-center text-sm">
-                                <span className="text-zinc-500 font-bold uppercase tracking-wider">AI Generation</span>
-                                <span className="text-fuchsia-400 font-black">FREE</span>
+                            <div className="flex justify-between items-center text-sm">
+                                <span className="text-zinc-500 font-bold uppercase tracking-[0.15em]">AI Magic</span>
+                                <span className="text-emerald-400 font-black">FREE</span>
                             </div>
-                            <div className="flex justify-between items-center text-sm pt-4 border-t border-white/5">
-                                <span className="text-zinc-500 font-bold uppercase tracking-wider">Final Total</span>
-                                <span className="text-white text-3xl font-black">$24.99</span>
+                            <div className="flex justify-between items-center pt-8 border-t border-white/5">
+                                <span className="text-zinc-400 font-black uppercase tracking-[0.2em] text-xs">Total</span>
+                                <div className="text-right">
+                                    <span className="text-white text-4xl font-black tabular-nums">$24.99</span>
+                                    <p className="text-[9px] text-zinc-600 font-bold mt-1 uppercase tracking-widest">Tax & Shipping inc.</p>
+                                </div>
                             </div>
                         </div>
 
                         <button 
                             onClick={async () => {
-                                // First, ensure the design is saved, or get the designId
-                                // For this flow, we'll assume the user might want to checkout directly
-                                // We'll trigger the save then the checkout
                                 try {
                                     const designResp = await fetch("http://localhost:5000/api/designs", {
                                         method: "POST",
@@ -166,20 +189,20 @@ const Editor = () => {
                                     console.error("Checkout Error:", error);
                                 }
                             }}
-                            className="w-full py-5 bg-white text-black rounded-2xl font-black text-lg flex items-center justify-center gap-2 hover:bg-zinc-200 transition-all shadow-[0_0_40px_rgba(255,255,255,0.15)] active:scale-95"
+                            className="w-full py-6 bg-white hover:bg-zinc-100 text-black rounded-[1.5rem] font-black text-xl flex items-center justify-center gap-3 transition-all shadow-[0_20px_50px_rgba(255,255,255,0.1)] active:scale-[0.98]"
                         >
-                            <ShoppingCart className="w-5 h-5" />
+                            <ShoppingCart className="w-6 h-6" />
                             Buy Now
                         </button>
                     </div>
 
-                    <div className="p-4 glass-morphism rounded-3xl flex items-center gap-4 group cursor-pointer hover:bg-white/10 transition-all">
-                        <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 group-hover:bg-white/10 transition-all">
+                    <div className="p-6 glass-morphism-dark rounded-[2rem] flex items-center gap-5 group cursor-pointer hover:bg-white/5 transition-all border border-white/5">
+                        <div className="w-12 h-12 bg-violet-500/10 rounded-2xl flex items-center justify-center border border-violet-500/20 group-hover:scale-110 transition-transform">
                             <Wand2 className="w-6 h-6 text-violet-400" />
                         </div>
                         <div>
-                            <p className="text-xs font-black uppercase tracking-widest text-zinc-500">Need Refinement?</p>
-                            <p className="text-white font-bold text-sm">Edit AI Prompt</p>
+                            <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Not feeling it?</p>
+                            <p className="text-white font-black text-sm group-hover:text-violet-400 transition-colors">Edit AI Prompt</p>
                         </div>
                     </div>
 
@@ -195,7 +218,7 @@ const Editor = () => {
                                         artworkPlacement: { /* get placement from EditorCanvas */ },
                                         title: "Custom Creation",
                                         price: 24.99,
-                                        tryOnEnabled: true // Enable Try-On
+                                        tryOnEnabled: true 
                                     }),
                                 });
                                 const designData = await designResp.json();
@@ -206,9 +229,9 @@ const Editor = () => {
                                 console.error("Failed to transition to try-on:", error);
                             }
                         }}
-                        className="w-full py-5 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-2xl font-black text-lg flex items-center justify-center gap-2 hover:opacity-90 transition-all shadow-[0_0_30px_rgba(139,92,246,0.3)] active:scale-95"
+                        className="w-full py-6 bg-gradient-to-br from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white rounded-[1.5rem] font-black text-xl flex items-center justify-center gap-3 transition-all shadow-[0_15px_40px_-5px_rgba(139,92,246,0.4)] active:scale-[0.98]"
                     >
-                        <Sparkles className="w-5 h-5 fill-white" />
+                        <Sparkles className="w-6 h-6 fill-white" />
                         Try It On Me!
                     </button>
                 </div>
