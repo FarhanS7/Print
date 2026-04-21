@@ -22,10 +22,10 @@ const Stat = ({ value, label }: { value: string; label: string }) => (
 
 /* ─── Connector between cards ───────────────────────────────────────────── */
 const Connector = () => (
-  <div className="flex items-center justify-center py-0.5">
-    <div className="flex flex-col items-center gap-0.5">
-      <div className="w-px h-3 bg-zinc-200" />
-      <ArrowDown className="w-3 h-3 text-zinc-300" />
+  <div className="flex items-center justify-center py-0">
+    <div className="flex flex-col items-center gap-0">
+      <div className="w-px h-2 bg-zinc-200" />
+      <ArrowDown className="w-2.5 h-2.5 text-zinc-300" />
     </div>
   </div>
 );
@@ -213,7 +213,7 @@ const TryOnCard = () => (
 
 /* ─── Right column — stacked workflow ───────────────────────────────────── */
 const WorkflowStack = () => (
-  <div className="relative w-full max-w-[360px] mx-auto lg:mx-0">
+  <div className="relative w-full max-w-[340px] mx-auto lg:mx-0 lg:scale-[0.85] xl:scale-95 transition-transform origin-top lg:-mt-10">
     {/* Very subtle background pill */}
     <div className="absolute -inset-4 bg-zinc-50 rounded-3xl -z-10" />
 
@@ -231,26 +231,11 @@ const LandingHero = () => (
     {/* Hairline rule below nav — editorial feel */}
     <div className="border-t border-zinc-100" />
 
-    {/* Top strip — breadcrumb label */}
-    <div className="max-w-7xl mx-auto px-5 sm:px-8">
-      <div className="flex items-center justify-between py-3 border-b border-zinc-100">
-        <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-400">
-          AI Print-on-Demand Platform
-        </span>
-        <span className="text-[11px] font-mono text-zinc-300">v2.0</span>
-      </div>
-    </div>
-
     {/* Main content */}
-    <div className="max-w-7xl mx-auto px-5 sm:px-8 py-14 lg:py-20">
+    <div className="max-w-7xl mx-auto px-5 sm:px-8 py-8 lg:py-16">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-14 lg:gap-10 items-start">
         {/* ── Left: editorial copy ──────────────────────────────────── */}
-        <div className="space-y-8">
-          {/* Eyebrow pill */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-50 border border-violet-100 text-violet-700 text-xs font-bold tracking-wide">
-            <Sparkles className="w-3.5 h-3.5" />
-            Powered by AI · Free to start
-          </div>
+        <div className="space-y-6 lg:space-y-8">
 
           {/* Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] xl:text-[3.75rem] font-black text-zinc-950 leading-[1.04] tracking-tight max-w-2xl">

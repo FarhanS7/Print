@@ -33,14 +33,18 @@ export const Navbar = () => {
   };
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled || mobileOpen
-          ? "bg-zinc-950/90 backdrop-blur-xl border-b border-white/10 shadow-sm"
-          : "bg-transparent"
-      }`}
-    >
-      <nav className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-6">
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pointer-events-none transition-all duration-300 pt-4 px-4 sm:pt-6">
+      <nav 
+        className={`
+          flex items-center justify-between gap-6 px-5 sm:px-8 h-14 sm:h-16 
+          rounded-full border transition-all duration-500 pointer-events-auto
+          max-w-5xl w-full
+          ${scrolled || mobileOpen
+            ? "bg-zinc-950/60 backdrop-blur-xl border-white/10 shadow-2xl"
+            : "bg-zinc-950/20 backdrop-blur-md border-white/5 shadow-lg"
+          }
+        `}
+      >
         {/* ── Logo ─────────────────────────────────────────── */}
         <Link
           to="/"
@@ -60,19 +64,27 @@ export const Navbar = () => {
 
         {/* ── Desktop nav ───────────────────────────────────── */}
         <ul className="hidden md:flex items-center gap-1 list-none m-0 p-0">
-          {NAV_LINKS.map(({ label, to }) => (
-            <li key={label}>
-              <Link
-                to={to}
-                onClick={(e) => handleAnchor(e, to)}
-                className="px-3.5 py-2 text-sm font-medium text-zinc-400
-                           hover:text-white rounded-lg hover:bg-white/5
-                           transition-colors duration-150"
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
+          {NAV_LINKS.map(({ label, to }) => {
+            const isActive = location.pathname === to || (to.startsWith("/#") && isHome);
+            return (
+              <li key={label} className="relative">
+                <Link
+                  to={to}
+                  onClick={(e) => handleAnchor(e, to)}
+                  className={`
+                    px-3.5 py-2 text-sm font-medium rounded-lg
+                    transition-all duration-300
+                    ${isActive ? "text-white" : "text-zinc-400 hover:text-white hover:bg-white/5"}
+                  `}
+                >
+                  {label}
+                </Link>
+                {isActive && (
+                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-violet-500 rounded-full shadow-[0_0_8px_rgba(139,92,246,0.8)]" />
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         {/* ── Right actions ──────────────────────────────────── */}
@@ -136,26 +148,26 @@ export const Navbar = () => {
 
       {/* ── Mobile drawer ──────────────────────────────────────── */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-white/10 bg-zinc-950/95 backdrop-blur-xl px-5 pt-3 pb-5 space-y-1">
+        <div className="absolute top-[calc(100%+0.5rem)] left-4 right-4 md:hidden border border-white/10 bg-zinc-950/90 backdrop-blur-xl px-5 py-6 space-y-1 shadow-2xl rounded-[2rem] pointer-events-auto animate-in fade-in zoom-in-95 duration-200">
           {NAV_LINKS.map(({ label, to }) => (
             <Link
               key={label}
               to={to}
               onClick={(e) => handleAnchor(e, to)}
-              className="block px-4 py-3 text-sm font-medium text-zinc-300
-                         hover:text-white hover:bg-white/5 rounded-xl
+              className="block px-4 py-3 text-base font-medium text-zinc-300
+                         hover:text-white hover:bg-white/5 rounded-2xl
                          transition-colors duration-150"
             >
               {label}
             </Link>
           ))}
 
-          <div className="pt-3 flex flex-col gap-2">
+          <div className="pt-4 mt-2 border-t border-white/5 flex flex-col gap-3">
             <Link
               to="/orders"
               onClick={closeMobile}
-              className="block px-4 py-3 text-center text-sm font-semibold
-                         text-zinc-300 border border-white/10 rounded-xl
+              className="block px-4 py-3 text-center text-base font-semibold
+                         text-zinc-300 border border-white/10 rounded-2xl
                          hover:border-white/20 hover:text-white transition-colors"
             >
               Sign In
@@ -163,12 +175,12 @@ export const Navbar = () => {
             <Link
               to="/generate"
               onClick={closeMobile}
-              className="flex items-center justify-center gap-2 px-4 py-3
-                         text-sm font-bold text-white bg-violet-600
-                         hover:bg-violet-500 rounded-xl transition-colors
-                         active:scale-95"
+              className="flex items-center justify-center gap-2 px-4 py-3.5
+                         text-base font-bold text-white bg-violet-600
+                         hover:bg-violet-500 rounded-2xl transition-colors
+                         active:scale-95 shadow-md shadow-violet-500/20"
             >
-              <Sparkles className="w-4 h-4" />
+              <Sparkles className="w-5 h-5" />
               Get Started Free
             </Link>
           </div>
