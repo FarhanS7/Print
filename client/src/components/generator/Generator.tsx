@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Wand2, Loader2, Sparkles, Image as ImageIcon } from "lucide-react";
+import { Wand2, Loader2, Sparkles, Image as ImageIcon, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export const Generator = () => {

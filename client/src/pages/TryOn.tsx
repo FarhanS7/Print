@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Navbar } from "../components/layout/Navbar";
 import { TryOnTypeSelector } from "../components/tryon/TryOnTypeSelector";
 import { TryOnUploader } from "../components/tryon/TryOnUploader";
 import { TryOnProgress } from "../components/tryon/TryOnProgress";
 import { TryOnPreview } from "../components/tryon/TryOnPreview";
-import { ArrowRight, Info } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export default function TryOn() {
   const location = useLocation();
-  const navigate = useNavigate();
   const [designId, setDesignId] = useState<string | null>(null);
   
   // TryOn state

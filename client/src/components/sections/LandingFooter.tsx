@@ -133,7 +133,7 @@ const LandingFooter = () => (
                       </a>
                     ) : (
                       <Link
-                        to={to}
+                        to={to || "#"}
                         className="group flex items-center text-sm font-medium text-zinc-500 hover:text-zinc-950 transition-colors duration-200"
                       >
                         <span className="relative">

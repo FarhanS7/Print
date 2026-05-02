@@ -4,7 +4,6 @@ import {
   Wand2,
   Layers,
   ScanFace,
-  ArrowDown,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -20,15 +19,7 @@ const Stat = ({ value, label }: { value: string; label: string }) => (
   </div>
 );
 
-/* ─── Connector between cards ───────────────────────────────────────────── */
-const Connector = () => (
-  <div className="flex items-center justify-center py-0">
-    <div className="flex flex-col items-center gap-0">
-      <div className="w-px h-2 bg-zinc-200" />
-      <ArrowDown className="w-2.5 h-2.5 text-zinc-300" />
-    </div>
-  </div>
-);
+
 
 /* ─── Card 1 · AI Generation ────────────────────────────────────────────── */
 const GenerateCard = () => (

@@ -89,7 +89,6 @@ export const TryOnProgress = ({ sessionId, onComplete, onError }: TryOnProgressP
           {STAGES.map((stage, idx) => {
             const isCompleted = idx < displayIndex || currentStatus === 'completed';
             const isActive = idx === displayIndex && currentStatus !== 'completed';
-            const isPending = idx > displayIndex;
 
             return (
               <div key={stage.id} className="flex items-center gap-4">

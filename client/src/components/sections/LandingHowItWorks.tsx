@@ -3,7 +3,6 @@ import {
   Layers,
   ShoppingBag,
   ArrowRight,
-  ArrowDown,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
