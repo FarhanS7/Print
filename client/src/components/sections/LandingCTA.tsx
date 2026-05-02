@@ -1,4 +1,4 @@
-import { Star, ArrowRight, Sparkles, Check } from "lucide-react";
+import { ArrowRight, Sparkles, Star, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 
 /* ─── Testimonial data ───────────────────────────────────────────────────── */
@@ -211,8 +211,6 @@ const LandingCTA = () => (
         </div>
       </div>
     </section>
-  </>
-);
   </>
 );
 
