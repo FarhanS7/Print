@@ -74,7 +74,7 @@ export class PhotoPolicyService {
         );
         score -= 25;
       } else {
-        const face = faces[0];
+        const face = faces[0]!;
         // Check face confidence and visibility
         if ((face.detectionConfidence || 0) < 0.7) {
           warnings.push(
@@ -118,9 +118,9 @@ export class PhotoPolicyService {
         warnings.push("Multiple people detected in the image.");
         score -= 15;
       } else {
-        const person = persons[0];
+        const person = persons[0]!;
         // Check if person bounding box is sufficiently large (upper body visible)
-        const confidence = person.confidence || 0;
+        const confidence = (person as any).score || (person as any).confidence || 0;
         if (confidence < 0.7) {
           warnings.push("Person detection confidence is low.");
           score -= 10;
@@ -192,7 +192,7 @@ export class PhotoPolicyService {
         // This is a proxy based on feature detection
         if (
           faces.length > 0 &&
-          (!faces[0].landmarks || faces[0].landmarks.length < 15)
+          (!faces[0]!.landmarks || faces[0]!.landmarks.length < 15)
         ) {
           warnings.push(
             "Image resolution may be low. Please use a higher quality photo.",

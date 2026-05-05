@@ -13,9 +13,10 @@ export const Generator = () => {
         if (!prompt) return;
         setGenerating(true);
         try {
-            const response = await fetch("http://localhost:5000/api/ai/generate", {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/ai/generate`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({ prompt }),
             });
             const data = await response.json();

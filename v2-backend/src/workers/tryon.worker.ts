@@ -5,6 +5,7 @@ import { TryOnSession } from '../models/tryOnSession.model.js';
 import { TryOnAsset } from '../models/tryOnAsset.model.js';
 import { type TryOnJobData } from '../queues/tryon.queue.js';
 import { FalTryOnProvider } from '../providers/tryon/falTryon.provider.js';
+import { HuggingFaceTryOnProvider } from '../providers/tryon/huggingFaceTryon.provider.js';
 import { GarmentComposerService } from '../services/garmentComposer.service.js';
 import { PhotoPolicyService } from '../services/photoPolicy.service.js';
 import { CloudinaryService } from '../services/cloudinary.service.js';
@@ -16,7 +17,8 @@ import { TryOnErrorCode, RetryableError, NonRetryableError } from '../modules/tr
 // Connect to MongoDB
 connectDB();
 
-const tryOnProvider = new FalTryOnProvider();
+const falProvider = new FalTryOnProvider();
+const fallbackProvider = new HuggingFaceTryOnProvider();
 
 /**
  * BullMQ Worker for processing Try-On generation jobs.
@@ -87,20 +89,34 @@ const worker = new Worker<TryOnJobData>('tryon-generation', async (job: Job<TryO
     await session.updateOne({ status: 'generating', generationStartedAt: new Date() });
     const genStartTime = Date.now();
 
-    const providerResult = await tryOnProvider.generate({
-      frontImageUrl: frontAsset.url,
-      garmentImageUrl: (session as any).composedGarmentUrl || frontAsset.url, // Placeholder
-      tryOnType: 'upper'
-    });
+    let providerResult;
+    let usedProviderName = falProvider.name;
 
-    await session.updateOne({ falRequestId: providerResult.requestId });
+    try {
+      console.log(`[Worker] Attempting generation with primary provider: ${falProvider.name}`);
+      providerResult = await falProvider.generate({
+        frontImageUrl: frontAsset.url,
+        garmentImageUrl: (session as any).composedGarmentUrl || frontAsset.url, // Placeholder
+        tryOnType: 'upper'
+      });
+    } catch (falError: any) {
+      console.warn(`[Worker] ${falProvider.name} failed (${falError.message}), falling back to ${fallbackProvider.name}...`);
+      usedProviderName = fallbackProvider.name;
+      providerResult = await fallbackProvider.generate({
+        frontImageUrl: frontAsset.url,
+        garmentImageUrl: (session as any).composedGarmentUrl || frontAsset.url, // Placeholder
+        tryOnType: 'upper'
+      });
+    }
+
+    await session.updateOne({ falRequestId: providerResult.requestId || 'hf-fallback' });
 
     MetricsService.logStage({
       sessionId: tryOnSessionId,
       userId: session.userId.toString(),
       stage: 'generation',
       durationMs: Date.now() - genStartTime,
-      provider: tryOnProvider.name,
+      provider: usedProviderName,
       outcome: 'success'
     });
 

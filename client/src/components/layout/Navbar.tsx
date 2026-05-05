@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Zap, ShoppingBag, Menu, X, Sparkles } from "lucide-react";
+import { authClient } from "../../lib/auth-client";
 
 const NAV_LINKS = [
   { label: "Features", to: "/#features" },
@@ -10,10 +11,22 @@ const NAV_LINKS = [
 ];
 
 export const Navbar = () => {
+  const { data: session } = authClient.useSession();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
+
+  const handleSignIn = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    });
+  };
+
+  const handleSignOut = async () => {
+    await authClient.signOut();
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -104,17 +117,30 @@ export const Navbar = () => {
             />
           </Link>
 
-          {/* Sign In — desktop only */}
-          <Link
-            to="/orders"
-            className="hidden md:inline-flex items-center px-4 py-1.5
-                       text-sm font-semibold text-zinc-300
-                       border border-white/10 rounded-lg
-                       hover:border-white/20 hover:text-white
-                       transition-colors duration-150 leading-none"
-          >
-            Sign In
-          </Link>
+          {/* Auth Button — desktop only */}
+          {session ? (
+            <button
+              onClick={handleSignOut}
+              className="hidden md:inline-flex items-center px-4 py-1.5
+                         text-sm font-semibold text-zinc-300
+                         border border-white/10 rounded-lg
+                         hover:border-white/20 hover:text-white
+                         transition-colors duration-150 leading-none"
+            >
+              Sign Out
+            </button>
+          ) : (
+            <button
+              onClick={handleSignIn}
+              className="hidden md:inline-flex items-center px-4 py-1.5
+                         text-sm font-semibold text-zinc-300
+                         border border-white/10 rounded-lg
+                         hover:border-white/20 hover:text-white
+                         transition-colors duration-150 leading-none"
+            >
+              Sign In
+            </button>
+          )}
 
           {/* Get Started — desktop only */}
           <Link
@@ -163,15 +189,25 @@ export const Navbar = () => {
           ))}
 
           <div className="pt-4 mt-2 border-t border-white/5 flex flex-col gap-3">
-            <Link
-              to="/orders"
-              onClick={closeMobile}
-              className="block px-4 py-3 text-center text-base font-semibold
-                         text-zinc-300 border border-white/10 rounded-2xl
-                         hover:border-white/20 hover:text-white transition-colors"
-            >
-              Sign In
-            </Link>
+            {session ? (
+              <button
+                onClick={handleSignOut}
+                className="block px-4 py-3 text-center text-base font-semibold
+                           text-zinc-300 border border-white/10 rounded-2xl
+                           hover:border-white/20 hover:text-white transition-colors"
+              >
+                Sign Out
+              </button>
+            ) : (
+              <button
+                onClick={handleSignIn}
+                className="block px-4 py-3 text-center text-base font-semibold
+                           text-zinc-300 border border-white/10 rounded-2xl
+                           hover:border-white/20 hover:text-white transition-colors"
+              >
+                Sign In
+              </button>
+            )}
             <Link
               to="/generate"
               onClick={closeMobile}

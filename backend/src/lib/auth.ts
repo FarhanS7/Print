@@ -7,6 +7,8 @@ export const auth = betterAuth({
     database: mongodbAdapter(mongoose.connection.db!, {
         client: mongoose.connection.getClient() as any
     }),
+    trustedOrigins: [process.env.CLIENT_URL || "http://localhost:5173"],
+    baseURL: process.env.BETTER_AUTH_URL,
     emailAndPassword: {
         enabled: true
     },

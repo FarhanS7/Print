@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import { IdempotencyService } from '../services/idempotency.service.js';
 import { TryOnErrorCode } from '../modules/tryon/tryon.errors.js';
 

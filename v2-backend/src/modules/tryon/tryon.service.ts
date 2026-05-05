@@ -1,4 +1,4 @@
-import { mongoose } from 'mongoose';
+import mongoose from 'mongoose';
 import { TryOnSession } from '../../models/tryOnSession.model.js';
 import { TryOnAsset } from '../../models/tryOnAsset.model.js';
 import { IdempotencyService } from '../../services/idempotency.service.js';

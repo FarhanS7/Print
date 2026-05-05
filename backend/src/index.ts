@@ -14,7 +14,7 @@ import stripeWebhookHandler from "./webhooks/stripe.webhook.js";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const APP_PORT = process.env.APP_PORT || 5005;
 
 // Connect to Database
 connectDB();
@@ -29,7 +29,7 @@ app.post(
 // Middlewares (in correct order)
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: true,
     credentials: true,
   }),
 );
@@ -40,26 +40,26 @@ app.use(cookieParser());
 // Body parser
 app.use(express.json());
 
-// Better Auth Handler
-app.all("/api/auth/*", toNodeHandler(auth));
+// Global Request Logger for debugging
+app.use((req, res, next) => {
+  console.log(`[Request] ${req.method} ${req.url}`);
+  next();
+});
 
-// AI Routes
+// API Routes (Moved above auth handler to avoid conflicts)
 app.use("/api/ai", aiRoutes);
-
-// Product Routes
 app.use("/api/products", productRoutes);
-
-// Design Routes
 app.use("/api/designs", designRoutes);
-
-// Order Routes
 app.use("/api/orders", orderRoutes);
+
+// Better Auth Handler
+app.all("/api/auth/*path", toNodeHandler(auth));
 
 // Basic Route
 app.get("/", (req, res) => {
   res.send("Printify Custom API is running...");
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(APP_PORT, () => {
+  console.log(`Server is running on port ${APP_PORT}`);
 });

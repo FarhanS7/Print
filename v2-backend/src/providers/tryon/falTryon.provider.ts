@@ -1,5 +1,5 @@
 import { fal } from "@fal-ai/client";
-import { TryOnProvider, TryOnProviderInput, TryOnProviderResult } from './tryonProvider.interface.js';
+import type { TryOnProvider, TryOnProviderInput, TryOnProviderResult } from './tryonProvider.interface.js';
 import { TryOnErrorCode, RetryableError } from '../../modules/tryon/tryon.errors.js';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -34,9 +34,14 @@ export class FalTryOnProvider implements TryOnProvider {
         throw new RetryableError(TryOnErrorCode.PROVIDER_FAILURE, 'Provider returned an empty result.');
       }
 
+      const outputImage = result.data.images[0];
+      if (!outputImage || !outputImage.url) {
+        throw new RetryableError(TryOnErrorCode.PROVIDER_FAILURE, 'Provider returned an invalid image structure.');
+      }
+
       return {
         requestId: result.requestId,
-        outputImageUrl: result.data.images[0].url,
+        outputImageUrl: outputImage.url,
         modelVersion: 'fashn-v1.6'
       };
     } catch (error: any) {
